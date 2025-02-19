@@ -5,4 +5,4 @@ export type Concert = {
     venue: string;
     genre: string;
     imageUrl: string;
-    };
+};

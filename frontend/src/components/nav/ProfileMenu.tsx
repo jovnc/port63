@@ -43,10 +43,10 @@ export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
         </Avatar>
         <div className="flex flex-col items-start">
           <span className="text-xs font-medium">{username}</span>
-          {isConnected && (
+          {/* {isConnected && (
             <span className="text-2xs">{truncatedAddress}...</span>
           )}
-          {!isConnected && <span className="text-2xs">No wallet</span>}
+          {!isConnected && <span className="text-2xs">No wallet</span>} */}
         </div>
         {isOpen ? (
           <ChevronUp className="h-4 w-4 opacity-50" />
@@ -55,7 +55,7 @@ export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="flex w-56 flex-col gap-2">
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           className="hover:cursor-pointer"
           onSelect={(e) => e.preventDefault()}
         >
@@ -68,7 +68,7 @@ export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
             </ConnectWalletModal>
           )}
           {isConnected && <DisconnectWalletButton />}
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <Separator />
         <DropdownMenuItem className="text-red-500 hover:cursor-pointer" asChild>

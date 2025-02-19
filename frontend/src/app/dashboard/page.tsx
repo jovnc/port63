@@ -1,5 +1,6 @@
-import CreditsDisplay from "@/components/dashboard/CreditsDisplay";
+import CreateConcertButton from "@/components/concert/CreateConcertButton";
 import UpcomingConcerts from "@/components/dashboard/UpcomingConcerts";
+import { UserStats } from "@/components/dashboard/UserStats";
 
 export default async function Dashboard() {
   return (
@@ -9,8 +10,13 @@ export default async function Dashboard() {
             Dashboard
         </h1>
       </div>
-      <CreditsDisplay />
-      <UpcomingConcerts />
+      <div className="w-full gap-4 flex flex-col">
+        <UserStats />
+        <div className="flex items-end justify-end">
+          <CreateConcertButton />
+        </div>
+        <UpcomingConcerts />
+      </div>
     </div>
   );
 }

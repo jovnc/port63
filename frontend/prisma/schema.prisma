@@ -8,21 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
+// AUTH.JS Template
 model Account {
   userId            String
   type              String
@@ -76,4 +62,46 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+// User Model
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tickets   Ticket[]
+}
+
+// Concert Model
+model Concert {
+  id                   String    @id @default(uuid())
+  smartContractAddress String?   @unique
+  name                 String
+  location             String
+  genre                String
+  imageUrl             String
+  description          String?
+  date                 DateTime?
+  tickets              Ticket[]
+  createdAt            DateTime  @default(now())
+}
+
+// Ticket Model
+model Ticket {
+  id                   String   @id @default(uuid())
+  smartContractAddress String   @unique
+  concertId            String
+  concert              Concert  @relation(fields: [concertId], references: [id])
+  ownerId              String
+  owner                User     @relation(fields: [ownerId], references: [id])
+  createdAt            DateTime @default(now())
 }

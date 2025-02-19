@@ -1,3 +1,16 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-sort-imports"],
+  "sortImports": true,
+  "tailwindcss": {
+    "config": "./tailwind.config.js",
+    "format": "auto"
+  },
+  "overrides": [
+    {
+      "files": "*.tsx",
+      "options": {
+        "parser": "typescript"
+      }
+    }
+  ]
 }
