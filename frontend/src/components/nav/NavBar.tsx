@@ -16,7 +16,7 @@ export async function Navbar({}) {
   const session = await auth();
 
   return (
-    <nav className="w-full fixed top-0 left-0 right-0 bg-dark-blue shadow-md z-50">
+    <nav className="w-full fixed top-0 left-0 right-0 shadow-md z-50 bg-primary-foreground">
       <div className="px-10 sm:px-8 lg:px-10">
         <div className="flex h-16 justify-between">
           <div className="flex flex-shrink-0 items-center">

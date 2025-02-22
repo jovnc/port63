@@ -1,23 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Ticket, DollarSign } from "lucide-react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Ticket } from "lucide-react";
+import WithdrawCard from "./WithdrawCard";
 
 interface Ticket {
-  id: string
-  eventName: string
-  date: string
+  id: string;
+  eventName: string;
+  date: string;
 }
 
-export function UserStats() {
+export function UserStats({
+  balance,
+  userId,
+}: {
+  balance: number;
+  userId: string;
+}) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [balance, setBalance] = useState(150.75)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <Card className="h-full">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -28,7 +38,9 @@ export function UserStats() {
           <CardContent>
             <ul className="space-y-2">
               {tickets.length === 0 && (
-                <li className="text-center text-muted-foreground text-sm">You have no tickets yet.</li>
+                <li className="text-center text-muted-foreground text-sm">
+                  You have no tickets yet.
+                </li>
               )}
               {tickets.map((ticket) => (
                 <motion.li
@@ -39,7 +51,9 @@ export function UserStats() {
                   className="flex justify-between items-center bg-secondary rounded-md p-2"
                 >
                   <span>{ticket.eventName}</span>
-                  <span className="text-sm text-muted-foreground">{ticket.date}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {ticket.date}
+                  </span>
                 </motion.li>
               ))}
             </ul>
@@ -52,26 +66,8 @@ export function UserStats() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <DollarSign className="h-6 w-6" />
-              Withdrawable Balance
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3, type: "spring" }}
-              className="text-2xl font-bold text-center"
-            >
-              ${balance.toFixed(2)}
-            </motion.div>
-          </CardContent>
-        </Card>
+        <WithdrawCard balance={balance} userId={userId} />
       </motion.div>
     </div>
-  )
+  );
 }
-
