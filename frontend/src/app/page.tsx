@@ -36,7 +36,7 @@ export default function page() {
           <div className="px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
+              <Card className="animate-slide-in">
                 <CardHeader>
                   <Lock className="w-8 h-8 mb-2" />
                   <CardTitle>Secure Transactions</CardTitle>
@@ -47,7 +47,7 @@ export default function page() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="animate-slide-in">
                 <CardHeader>
                   <Users className="w-8 h-8 mb-2" />
                   <CardTitle>Peer-to-Peer</CardTitle>
@@ -58,7 +58,7 @@ export default function page() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="animate-slide-in">
                 <CardHeader>
                   <RefreshCcw className="w-8 h-8 mb-2" />
                   <CardTitle>Transparent History</CardTitle>
@@ -110,4 +110,3 @@ export default function page() {
     </div>
   )
 }
-
