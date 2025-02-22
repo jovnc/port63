@@ -9,14 +9,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Music } from "lucide-react";
 import { Concert } from "@/types/concert";
+import Image from "next/image";
 
 export function ConcertCard({ concert }: { concert: Concert }) {
   return (
     <Card key={concert.id} className="overflow-hidden">
-      <img
+      <Image
         src={concert.imageUrl || "/placeholder.svg"}
         alt={concert.name}
         className="w-full h-48 object-cover"
+        width={800}
+        height={400}
       />
       <CardHeader>
         <CardTitle>{concert.name}</CardTitle>

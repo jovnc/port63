@@ -1,14 +1,17 @@
 import { Calendar, MapPin, Music } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Concert } from "@/types/concert";
+import Image from "next/image";
 
 export default function ConcertPageCard({ concert }: { concert: Concert }) {
   return (
     <Card className="mb-8">
-      <img
+      <Image
         src={concert.imageUrl || "/placeholder.svg"}
         alt={concert.name}
         className="w-full h-64 object-cover rounded-lg"
+        width={800}
+        height={400}
       />
       <CardHeader>
         <CardTitle className="text-3xl">{concert.name}</CardTitle>

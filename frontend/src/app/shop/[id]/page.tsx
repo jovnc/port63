@@ -4,7 +4,11 @@ import NotFound from "@/app/not-found";
 import { Concert } from "@/types/concert";
 import ConcertPageCard from "@/components/shop/ConcertPageCard";
 
-export default async function page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function page({ params }: PageProps) {
   const { id } = await params;
   const concertData = await getConcertById(id);
 
