@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutButton from "../auth/LogoutButton";
 import { Separator } from "../ui/separator";
-import { useAccount } from "wagmi";
+// import { useAccount } from "wagmi";
 
 interface ProfileMenuProps {
   username: string;
@@ -20,7 +20,7 @@ interface ProfileMenuProps {
 
 export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { address, isConnected } = useAccount();
+  // const { address, isConnected } = useAccount();
   const [hydrated, setHydrated] = React.useState(false);
 
   React.useEffect(() => {
@@ -29,7 +29,7 @@ export function ProfileMenu({ username, avatarUrl }: ProfileMenuProps) {
 
   if (!hydrated) return null;
 
-  const truncatedAddress = address?.slice(0, 4);
+  // const truncatedAddress = address?.slice(0, 4);
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>

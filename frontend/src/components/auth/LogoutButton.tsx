@@ -2,13 +2,10 @@
 import { logOut } from "@/actions/auth";
 import { LogOut } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDisconnect } from "wagmi";
 
 export default function LogoutButton() {
-  const { disconnect } = useDisconnect()
   const handleLogout = async () => {
     await logOut();
-    disconnect();
   };
   return (
     <form action={handleLogout} className="flex flex-row items-center gap-2">
