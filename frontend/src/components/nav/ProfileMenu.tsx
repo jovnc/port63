@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutButton from "../auth/LogoutButton";
 import { Separator } from "../ui/separator";
-import { ConnectWalletModal } from "../wallet/ConnectWalletModal";
-import { Button } from "../ui/button";
 import { useAccount } from "wagmi";
-import { DisconnectWalletButton } from "../wallet/DisconnectWalletButton";
 
 interface ProfileMenuProps {
   username: string;
