@@ -156,6 +156,8 @@ export function CreateConcertForm() {
 
       // Step 3: add to database
       updateStage(2, "in-progress");
+
+      console.log(values);
       await createConcert({
         name: values.name,
         location: values.location,
@@ -164,15 +166,15 @@ export function CreateConcertForm() {
         description: values.description || "",
         imageUrl: url || "",
         limit: values.limit,
-        price: (values.price * 100) as number,
+        price: values.price,
         smartContractAddress: address,
       });
       updateStage(2, "completed");
 
-      // toast({
-      //   title: "Concert created",
-      //   description: "Your new concert has been successfully created.",
-      // });
+      toast({
+        title: "Concert created",
+        description: "Your new concert has been successfully created.",
+      });
     } catch (error) {
       toast({
         description: "Failed to create concert.",

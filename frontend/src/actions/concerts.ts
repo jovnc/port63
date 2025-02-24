@@ -2,7 +2,6 @@
 
 import { concertFactoryContract } from "@/lib/ethers/contracts";
 import db from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
 export async function getUpcomingConcerts() {
   try {
@@ -47,18 +46,7 @@ export async function getConcerts(cursor: string | null, take: number = 10) {
     const hasMore = concerts.length > take;
     const nextCursor = hasMore ? concerts[concerts.length - 2].id : null;
 
-    const concertModified = concerts.slice(0, take).map((concert) => ({
-      ...concert,
-      price: Number(
-        Prisma.Decimal.prototype.toFixed.call(
-          concert.price,
-          2,
-          Prisma.Decimal.ROUND_HALF_UP
-        )
-      ),
-    }));
-
-    return { concerts: concertModified, nextCursor, hasMore };
+    return { concerts, nextCursor, hasMore };
   } catch (error) {
     return { concerts: [], nextCursor: null, hasMore: false };
   }
@@ -99,8 +87,9 @@ export async function createConcert({
   smartContractAddress: string;
 }) {
   try {
-    const concert = await db.concert.create({
+    await db.concert.create({
       data: {
+        smartContractAddress,
         name,
         location,
         genre,
@@ -108,14 +97,11 @@ export async function createConcert({
         description,
         imageUrl,
         limit,
-        price: price / 100,
-        smartContractAddress,
+        price,
       },
     });
-
-    // return concert;
-    return;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }

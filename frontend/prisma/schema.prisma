@@ -93,8 +93,8 @@ model Concert {
   imageUrl             String
   description          String?
   date                 DateTime?
-  limit                Int
-  price                Decimal   @db.Decimal(10, 2)
+  limit                Int?
+  price                Int?
   tickets              Ticket[]
   createdAt            DateTime  @default(now())
 }
