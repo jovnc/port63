@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, Lock, RefreshCcw, Ticket, Users } from "lucide-react";
+import { ArrowRight, Lock, RefreshCcw, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function page() {

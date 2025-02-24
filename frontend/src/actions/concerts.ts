@@ -1,6 +1,8 @@
 "use server";
 
+import { concertFactoryContract } from "@/lib/ethers/contracts";
 import db from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function getUpcomingConcerts() {
   try {
@@ -45,7 +47,18 @@ export async function getConcerts(cursor: string | null, take: number = 10) {
     const hasMore = concerts.length > take;
     const nextCursor = hasMore ? concerts[concerts.length - 2].id : null;
 
-    return { concerts: concerts.slice(0, take), nextCursor, hasMore };
+    const concertModified = concerts.slice(0, take).map((concert) => ({
+      ...concert,
+      price: Number(
+        Prisma.Decimal.prototype.toFixed.call(
+          concert.price,
+          2,
+          Prisma.Decimal.ROUND_HALF_UP
+        )
+      ),
+    }));
+
+    return { concerts: concertModified, nextCursor, hasMore };
   } catch (error) {
     return { concerts: [], nextCursor: null, hasMore: false };
   }
@@ -71,6 +84,9 @@ export async function createConcert({
   date,
   description,
   imageUrl,
+  limit,
+  price,
+  smartContractAddress,
 }: {
   name: string;
   location: string;
@@ -78,6 +94,9 @@ export async function createConcert({
   date: Date;
   description: string;
   imageUrl: string;
+  limit: number;
+  price: number;
+  smartContractAddress: string;
 }) {
   try {
     const concert = await db.concert.create({
@@ -88,11 +107,47 @@ export async function createConcert({
         date,
         description,
         imageUrl,
+        limit,
+        price: price / 100,
+        smartContractAddress,
       },
     });
 
-    return concert;
+    // return concert;
+    return;
   } catch (error) {
     return null;
+  }
+}
+
+export async function createConcertContract({
+  date,
+  limit,
+}: {
+  date: Date;
+  limit: number;
+}): Promise<string> {
+  try {
+    // Convert Date to Unix timestamp (seconds since epoch)
+    const unixTimestamp = Math.floor(date.getTime() / 1000);
+
+    // Create the concert
+    const tx = await concertFactoryContract.createConcert(unixTimestamp, limit);
+    await tx.wait();
+
+    console.log("Transaction hash: ", tx.hash);
+
+    // Get all concerts
+    const concerts = await concertFactoryContract.getConcerts();
+
+    // The new concert address will be the last one in the array
+    const newConcertAddress = concerts[concerts.length - 1];
+
+    console.log("New concert address: ", newConcertAddress);
+
+    return newConcertAddress;
+  } catch (error) {
+    console.error("Error creating concert contract:", error);
+    throw error; // Re-throw the error for the caller to handle
   }
 }

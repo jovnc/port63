@@ -86,13 +86,15 @@ model User {
 // Concert Model
 model Concert {
   id                   String    @id @default(uuid())
-  smartContractAddress String?   @unique
+  smartContractAddress String    @unique
   name                 String
   location             String
   genre                String
   imageUrl             String
   description          String?
   date                 DateTime?
+  limit                Int
+  price                Decimal   @db.Decimal(10, 2)
   tickets              Ticket[]
   createdAt            DateTime  @default(now())
 }

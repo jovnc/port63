@@ -1,9 +1,14 @@
-import { Calendar, MapPin, Music } from "lucide-react";
+import { Calendar, ExternalLink, MapPin, Music } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Concert } from "@/types/concert";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ConcertPageCard({ concert }: { concert: Concert }) {
+  const ticketPrice = concert.price.toFixed(2);
+  const blockURL = process.env.XRP_EVM_BLOCK_EXPLORER as string;
+  const blockExplorerURL = `${blockURL}/address/${concert.smartContractAddress}`;
+
   return (
     <Card className="mb-8">
       <Image
@@ -32,6 +37,17 @@ export default function ConcertPageCard({ concert }: { concert: Concert }) {
           </div>
         </div>
         <p className="text-muted-foreground text-sm">{concert.description}</p>
+        <p className="font-bold text-md mt-8">Ticket Price: ${ticketPrice}</p>
+        <p className="text-muted-foreground text-sm mt-8">
+          Smart Contract Address: {concert.smartContractAddress}
+        </p>
+        <Link
+          className="text-muted-foreground text-sm mt-6"
+          href={blockExplorerURL}
+          target="_blank"
+        >
+          View on Block Explorer <ExternalLink className="w-4 h-4 inline" />
+        </Link>
       </CardContent>
     </Card>
   );
