@@ -7,10 +7,10 @@ export type Concert = {
   location: string; // changed from venue to location
   genre: string;
   imageUrl: string;
-  description?: string; // optional string
-  date: Date; // optional DateTime
+  description: string | null; // optional string
+  date: Date | null; // optional DateTime
   tickets?: Ticket[]; // optional array of Ticket relations
   createdAt: Date; // added DateTime field
-  price: number;
-  limit: number;
+  price: number | null;
+  limit: number | null;
 };

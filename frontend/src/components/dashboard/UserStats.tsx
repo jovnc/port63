@@ -1,26 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Ticket } from "lucide-react";
+import { Ticket as TicketIcon } from "lucide-react";
 import WithdrawCard from "./WithdrawCard";
-
-interface Ticket {
-  id: string;
-  eventName: string;
-  date: string;
-}
+import UserTickets from "./UserTickets";
+import { Ticket } from "@/types/ticket";
 
 export function UserStats({
   balance,
   userId,
+  tickets,
 }: {
   balance: number;
   userId: string;
+  tickets: Ticket[];
 }) {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
       <motion.div
@@ -31,30 +26,22 @@ export function UserStats({
         <Card className="h-full">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Ticket className="h-6 w-6" />
+              <TicketIcon className="h-6 w-6" />
               Your Tickets
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
               {tickets.length === 0 && (
-                <li className="text-center text-muted-foreground text-sm">
+                <li
+                  className="text-center text-muted-foreground text-sm"
+                  key="0"
+                >
                   You have no tickets yet.
                 </li>
               )}
               {tickets.map((ticket) => (
-                <motion.li
-                  key={ticket.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-between items-center bg-secondary rounded-md p-2"
-                >
-                  <span>{ticket.eventName}</span>
-                  <span className="text-sm text-muted-foreground">
-                    {ticket.date}
-                  </span>
-                </motion.li>
+                <UserTickets ticket={ticket} key={ticket.id} />
               ))}
             </ul>
           </CardContent>

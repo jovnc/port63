@@ -1,8 +1,9 @@
-import TicketTabs from "@/components/shop/TicketTabs";
 import { getConcertById } from "@/actions/concerts";
 import NotFound from "@/app/not-found";
 import { Concert } from "@/types/concert";
 import ConcertPageCard from "@/components/shop/ConcertPageCard";
+import { BuyTicketForm } from "@/components/shop/BuyTicketForm";
+import { auth } from "@/auth";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -16,12 +17,21 @@ export default async function page({ params }: PageProps) {
     return <NotFound />;
   }
 
+  const user = await auth();
+  const userId = user?.user?.id as string;
+
   const concert = concertData.concert as Concert;
 
   return (
     <div className="container mx-auto px-4 py-8 mt-16">
       <ConcertPageCard concert={concert} />
-      <TicketTabs />
+      <BuyTicketForm
+        name={concert.name}
+        price={concert.price}
+        buyerCUID={userId}
+        concertAddress={concert.smartContractAddress}
+        concertId={concert.id}
+      />
     </div>
   );
 }
