@@ -21,30 +21,43 @@ export const ticketAbi = [
     type: "constructor",
   },
   {
-    anonymous: false,
-    inputs: [
+    inputs: [],
+    name: "buyerCUID",
+    outputs: [
       {
-        indexed: false,
         internalType: "string",
-        name: "buyerCUID",
+        name: "",
         type: "string",
       },
     ],
-    name: "TicketClaimed",
-    type: "event",
+    stateMutability: "view",
+    type: "function",
   },
   {
-    anonymous: false,
     inputs: [
       {
-        indexed: false,
         internalType: "string",
-        name: "newBuyerCUID",
+        name: "_newBuyerCUID",
         type: "string",
       },
     ],
-    name: "TicketTransferred",
-    type: "event",
+    name: "buyFromResale",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "sellPrice",
+        type: "uint256",
+      },
+    ],
+    name: "cancelListing",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [
@@ -57,46 +70,6 @@ export const ticketAbi = [
     name: "claim",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_newBuyerCUID",
-        type: "string",
-      },
-    ],
-    name: "transferTicket",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "putOnEscrow",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "removeFromEscrow",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyerCUID",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -123,6 +96,58 @@ export const ticketAbi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isTicketClaimed",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "price",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "sellPrice",
+        type: "uint256",
+      },
+    ],
+    name: "putOnResale",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_newBuyerCUID",
+        type: "string",
+      },
+    ],
+    name: "transferTicket",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];

@@ -15,7 +15,10 @@ export function ConcertCard({ concert }: { concert: Concert }) {
   return (
     <Card key={concert.id} className="overflow-hidden">
       <Image
-        src={concert.imageUrl || "/placeholder.svg"}
+        src={
+          concert.imageUrl ||
+          "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+        }
         alt={concert.name}
         className="w-full h-48 object-cover"
         width={800}
@@ -27,7 +30,7 @@ export function ConcertCard({ concert }: { concert: Concert }) {
       <CardContent>
         <div className="flex items-center mb-2">
           <Calendar className="w-4 h-4 mr-2" />
-          <span className="text-sm">{concert.date.toISOString()}</span>
+          <span className="text-sm">{concert?.date?.toISOString() ?? ""}</span>
         </div>
         <div className="flex items-center mb-2">
           <MapPin className="w-4 h-4 mr-2" />

@@ -12,7 +12,10 @@ export default function ConcertPageCard({ concert }: { concert: Concert }) {
   return (
     <Card className="mb-8">
       <Image
-        src={concert.imageUrl || "/placeholder.svg"}
+        src={
+          concert.imageUrl ||
+          "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+        }
         alt={concert.name}
         className="w-full h-64 object-cover rounded-lg"
         width={800}

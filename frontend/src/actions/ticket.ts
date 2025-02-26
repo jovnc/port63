@@ -1,6 +1,6 @@
 "use server";
 
-import { getConcertContract } from "@/lib/ethers/contracts";
+import { getConcertContract, getTicketContract } from "@/lib/ethers/contracts";
 import db from "@/lib/prisma";
 
 export async function getUserTickets({ userId }: { userId: string }) {
@@ -122,5 +122,45 @@ export async function createTicketContract({
   } catch (error) {
     console.error("Error creating ticket contract:", error);
     throw error; // Re-throw the error for the caller to handle
+  }
+}
+
+export async function claimTicket({
+  ticketAddress,
+  buyerCUID,
+}: {
+  ticketAddress: string;
+  buyerCUID: string;
+}) {
+  try {
+    const ticketContract = getTicketContract(ticketAddress);
+    const tx = await ticketContract.claim(buyerCUID);
+    await tx.wait();
+
+    console.log("Transaction hash: ", tx.hash);
+
+    console.log(tx.status);
+
+    return { success: true, message: "Ticket claimed successfully" };
+  } catch (error) {
+    console.error("Claim error:", error);
+
+    return { success: false, error: "Transaction failed" };
+  }
+}
+
+export async function isTicketClaimed({
+  ticketAddress,
+}: {
+  ticketAddress: string;
+}) {
+  try {
+    const ticketContract = getTicketContract(ticketAddress);
+    const isClaimed = await ticketContract.claimed();
+
+    return isClaimed;
+  } catch (error) {
+    console.error("Error checking if ticket is claimed:", error);
+    return false;
   }
 }

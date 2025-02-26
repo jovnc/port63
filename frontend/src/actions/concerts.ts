@@ -1,6 +1,9 @@
 "use server";
 
-import { concertFactoryContract } from "@/lib/ethers/contracts";
+import {
+  concertFactoryContract,
+  getConcertContract,
+} from "@/lib/ethers/contracts";
 import db from "@/lib/prisma";
 
 export async function getUpcomingConcerts() {
@@ -137,3 +140,21 @@ export async function createConcertContract({
     throw error; // Re-throw the error for the caller to handle
   }
 }
+
+// export async function getConcertListings({
+//   concertAddress,
+// }: {
+//   concertAddress: string;
+// }) {
+//   try {
+//     const concertContract = getConcertContract(concertAddress);
+//     const listings = await concertContract.getAllTicketListings();
+
+//     console.log(listings);
+
+//     return { ticketIds: listings.ticketIds, prices: listings.prices };
+//   } catch (error) {
+//     console.error("Error fetching concert listings:", error);
+//     throw error;
+//   }
+// }

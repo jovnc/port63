@@ -13,9 +13,7 @@ contract Ticket is ERC721 {
     string public buyerCUID;
     bool public claimed;
     bool public escrow;
-
-    event TicketClaimed(string buyerCUID);
-    event TicketTransferred(string newBuyerCUID);
+    uint256 public price;
 
     /**
      * @notice Constructor.
@@ -29,6 +27,9 @@ contract Ticket is ERC721 {
         string memory _buyerCUID
     ) ERC721(_name, _symbol)  {
         buyerCUID = _buyerCUID;
+        price = 0;
+        claimed = false;
+        escrow = false;
         // Mint the one and only ticket (tokenId = 1) to _recipient
         _safeMint(msg.sender, 1);
     }
@@ -45,7 +46,6 @@ contract Ticket is ERC721 {
             "Buyer CUID mismatch"
         );
         claimed = true;
-        emit TicketClaimed(buyerCUID);
     }
 
     /**
@@ -55,20 +55,41 @@ contract Ticket is ERC721 {
     function transferTicket(string memory _newBuyerCUID) external {
         require(!claimed, "Claimed tickets cannot be transferred");
         buyerCUID = _newBuyerCUID;
-        emit TicketTransferred(buyerCUID);
     }
 
     /**
-     * @notice Put ticket on escrow
+     * @notice Put ticket on resale market
      */
-    function putOnEscrow() external  {
+    function putOnResale(uint256 sellPrice) external {
+        require(escrow == false, "Ticket already listed for sale");
+        require(claimed == false, "Claimed tickets cannot be listed for sale");
         escrow = true;
+        price = sellPrice;
     }
 
     /**
-     * @notice Put ticket on escrow
+     * @notice Buy ticket from resale market
      */
-    function removeFromEscrow() external {
+    function buyFromResale(string memory _newBuyerCUID) external {
+        require(price > 0, "Ticket is not listed for sale");
         escrow = false;
+        this.transferTicket(_newBuyerCUID);
+    }
+
+    /**
+     * @notice Cancel ticket listing
+     */
+    function cancelListing(uint256 sellPrice) external {
+        require(price > 0, "Ticket is not listed for sale");
+        escrow = false;
+        price = sellPrice;
+    }
+
+    /**
+     * @notice Check if the ticket has been claimed.
+     * @return bool Returns true if the ticket is claimed, false otherwise.
+     */
+    function isTicketClaimed() public view returns (bool) {
+        return claimed;
     }
 }

@@ -17,7 +17,7 @@ export function BuyTicketForm({
   concertId,
 }: {
   name: string;
-  price: number;
+  price: number | null;
   buyerCUID: string;
   concertAddress: string;
   concertId: string;
@@ -94,7 +94,7 @@ export function BuyTicketForm({
           </div>
           <p className="font-bold text-sm">General Admission Ticket</p>
           <p className="text-sm text-muted-foreground">
-            Price: ${price.toFixed(2)}
+            Price: ${price?.toFixed(2) ?? "0.00"}
           </p>
           <Button type="submit" disabled={isLoading} onClick={onSubmit}>
             {isLoading ? (

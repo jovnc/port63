@@ -1,0 +1,37 @@
+"use client";
+import { CircleCheckBig } from "lucide-react";
+import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+
+export default function SuccessClaimScreen({
+  transactionId,
+  setIsSuccess,
+}: {
+  transactionId: string;
+  setIsSuccess: (value: boolean) => void;
+}) {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    // Function to format the current time
+    const updateTime = () => {
+      const now = new Date();
+      const formattedTime = now.toLocaleTimeString(); // Adjust format as needed
+      setTime(formattedTime);
+    };
+
+    updateTime(); // Set initial time
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 border border-green-400 p-4">
+      <p className="text-sm text-center">Transaction ID: {transactionId}</p>
+      <CircleCheckBig className="h-20 w-20 text-green-500" />
+      <p className="text-lg font-bold">{time}</p>
+      <p className="text-sm"></p>
+      <p className="mt-10 text-center text-xs text-gray-600">
+        Note: please present this page to staff to confirm ticket claim.
+      </p>
+    </div>
+  );
+}

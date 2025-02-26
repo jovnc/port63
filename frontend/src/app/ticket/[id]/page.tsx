@@ -1,4 +1,8 @@
-import { getTicketById, userOwnTicket } from "@/actions/ticket";
+import {
+  getTicketById,
+  isTicketClaimed,
+  userOwnTicket,
+} from "@/actions/ticket";
 import NotFound from "@/app/not-found";
 import { auth } from "@/auth";
 import ClaimTicketForm from "@/components/ticket/ClaimTicketForm";
@@ -29,17 +33,26 @@ export default async function page({ params }: PageProps) {
     return <NotFound />;
   }
 
+  const isClaimed = await isTicketClaimed({
+    ticketAddress: ticket.smartContractAddress,
+  });
+
   return (
     <div className="mx-10 my-10 flex flex-col items-center justify-center gap-4">
       <div className="mb-8 flex flex-col justify-between mt-16">
         <h1 className="text-center text-3xl font-bold">Ticket Information</h1>
       </div>
       <div className="w-full gap-8 flex flex-col justify-center">
-        <TicketCard ticket={ticket} />
+        <TicketCard ticket={ticket} isClaimed={isClaimed} />
         <p className="text-muted-foreground text-sm text-center">
           You can only claim the QR code 4 hours before the concert
         </p>
-        <ClaimTicketForm />
+        <ClaimTicketForm
+          ticketId={ticketId}
+          userId={userId}
+          smartContractAddress={ticket.smartContractAddress}
+          isClaimed={isClaimed}
+        />
       </div>
     </div>
   );
