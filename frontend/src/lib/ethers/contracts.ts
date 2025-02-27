@@ -4,8 +4,10 @@ import { signer } from "./utils";
 import { concertAbi } from "../abi/concertAbi";
 import { ticketAbi } from "../abi/ticketAbi";
 
+// const address = process.env.CONCERT_FACTORY_ADDRESS as string;
+
 export const concertFactoryContract = new ethers.Contract(
-  "0xB698821aA6ddb26e424D5da79FF3cf2Ca3709e5D",
+  "0x6813cB88ED2B0A9348904ba108fDea3398bd1088",
   concertFactoryAbi,
   signer
 );

@@ -6,6 +6,8 @@ import { Ticket as TicketIcon } from "lucide-react";
 import WithdrawCard from "./WithdrawCard";
 import UserTickets from "./UserTickets";
 import { Ticket } from "@/types/ticket";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export function UserStats({
   balance,
@@ -44,6 +46,11 @@ export function UserStats({
                 <UserTickets ticket={ticket} key={ticket.id} />
               ))}
             </ul>
+            {tickets.length > 0 && (
+              <Button asChild className="float-end my-4" variant={"outline"}>
+                <Link href="/ticket">View All Tickets</Link>
+              </Button>
+            )}
           </CardContent>
         </Card>
       </motion.div>

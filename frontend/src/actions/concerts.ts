@@ -5,6 +5,7 @@ import {
   getConcertContract,
 } from "@/lib/ethers/contracts";
 import db from "@/lib/prisma";
+import { Ticket } from "@/types/ticket";
 
 export async function getUpcomingConcerts() {
   try {
@@ -141,20 +142,38 @@ export async function createConcertContract({
   }
 }
 
-// export async function getConcertListings({
-//   concertAddress,
-// }: {
-//   concertAddress: string;
-// }) {
-//   try {
-//     const concertContract = getConcertContract(concertAddress);
-//     const listings = await concertContract.getAllTicketListings();
+export async function getTicketsOnResale({
+  concertAddress,
+}: {
+  concertAddress: string;
+}) {
+  try {
+    // Get contract and fetch tickets on resale
+    const concertContract = getConcertContract(concertAddress);
+    const listings = await concertContract.getTicketsOnResale();
 
-//     console.log(listings);
+    // If no listings, return empty array
+    if (!listings || listings.length === 0) {
+      return [];
+    }
 
-//     return { ticketIds: listings.ticketIds, prices: listings.prices };
-//   } catch (error) {
-//     console.error("Error fetching concert listings:", error);
-//     throw error;
-//   }
-// }
+    const tickets: Ticket[] = await db.ticket.findMany({
+      where: {
+        smartContractAddress: {
+          in: listings.map((address: string) => address.toString()),
+        },
+        concert: {
+          smartContractAddress: concertAddress,
+        },
+      },
+      include: {
+        concert: true,
+      },
+    });
+
+    return tickets;
+  } catch (error) {
+    console.error("Error fetching concert listings:", error);
+    return [];
+  }
+}

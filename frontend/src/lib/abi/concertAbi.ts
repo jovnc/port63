@@ -30,12 +30,12 @@ export const concertAbi = [
   },
   {
     inputs: [],
-    name: "totalTickets",
+    name: "getAllTicketAddresses",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "address[]",
         name: "",
-        type: "uint256",
+        type: "address[]",
       },
     ],
     stateMutability: "view",
@@ -43,44 +43,12 @@ export const concertAbi = [
   },
   {
     inputs: [],
-    name: "soldTickets",
+    name: "getTicketsOnResale",
     outputs: [
       {
-        internalType: "uint256",
+        internalType: "address[]",
         name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextTicketId",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "ticketContracts",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
+        type: "address[]",
       },
     ],
     stateMutability: "view",
@@ -111,12 +79,12 @@ export const concertAbi = [
   },
   {
     inputs: [],
-    name: "getAllTicketAddresses",
+    name: "nextTicketId",
     outputs: [
       {
-        internalType: "address[]",
+        internalType: "uint256",
         name: "",
-        type: "address[]",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -124,12 +92,44 @@ export const concertAbi = [
   },
   {
     inputs: [],
-    name: "getTicketsOnResale",
+    name: "soldTickets",
     outputs: [
       {
-        internalType: "address[]",
+        internalType: "uint256",
         name: "",
-        type: "address[]",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "ticketContracts",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalTickets",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

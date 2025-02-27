@@ -10,6 +10,7 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/shop", label: "Marketplace" },
+  { href: "/ticket", label: "My Tickets" },
 ];
 
 export async function Navbar({}) {

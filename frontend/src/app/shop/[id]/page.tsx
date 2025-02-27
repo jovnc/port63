@@ -4,6 +4,7 @@ import { Concert } from "@/types/concert";
 import ConcertPageCard from "@/components/shop/ConcertPageCard";
 import { BuyTicketForm } from "@/components/shop/BuyTicketForm";
 import { auth } from "@/auth";
+import ResellLink from "@/components/shop/ResellLink";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -32,6 +33,7 @@ export default async function page({ params }: PageProps) {
         concertAddress={concert.smartContractAddress}
         concertId={concert.id}
       />
+      <ResellLink id={concert.id} />
     </div>
   );
 }
